@@ -6,6 +6,10 @@ import android.os.Bundle;
 
 import rj.viewpager.adapters.CustomPagerAdapter;
 
+/**
+ * sourced from https://www.journaldev.com/10096/android-viewpager-example-tutorial
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
