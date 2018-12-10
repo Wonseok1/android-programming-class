@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">ViewPager</string>
+    <string name="red">This is Red</string>
+    <string name="blue">This is Blue</string>
+    <string name="green">This is Green</string>
+</resources>
