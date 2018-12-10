@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ViewFlipper;
 
+/**
+ * sourced from https://www.journaldev.com/10429/android-viewflipper-example-tutorial
+ */
+
 public class MainActivity extends AppCompatActivity {
     private ViewFlipper mViewFlipper;
     private Context mContext;
