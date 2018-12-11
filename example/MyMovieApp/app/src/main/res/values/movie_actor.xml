@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="movie_actor">
+        <item>채드윅 보스만, 마이클 B. 조던, 루피타 뇽, 다나이 구리라</item>
+        <item>심은경, 이승기</item>
+        <item>김태리, 류준열, 문소리, 진기주</item>
+        <item>누미 라파스, 윌렘 데포, 글렌 클로즈</item>
+    </string-array>
+</resources>

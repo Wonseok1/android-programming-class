@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="photo_package">
+        <item>black1/black2/black3</item>
+        <item>match1/match2/match3</item>
+        <item>little1/little2/little3</item>
+        <item>monday1/monday2/monday3</item>
+    </string-array>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="movie_match_img">
+        <item>@drawable/match1</item>
+        <item>@drawable/match2</item>
+        <item>@drawable/match3</item>
+    </array>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="movie_img">
+        <item>@drawable/black</item>
+        <item>@drawable/match</item>
+        <item>@drawable/little</item>
+        <item>@drawable/monday</item>
+    </array>
+</resources>
