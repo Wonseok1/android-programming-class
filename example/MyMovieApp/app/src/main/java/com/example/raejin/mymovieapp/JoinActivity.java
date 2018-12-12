@@ -96,6 +96,7 @@ public class JoinActivity extends AppCompatActivity {
                 tv_msg.setText("정상적인 비밀번호 입니다.");
             } else {
                 tv_msg.setText("비밀번호가 일치하지 않습니다.");
+                isIdChecked = false;
             }
         }
     }
