@@ -27,6 +27,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:text="pwgildong"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/et_mail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -40,6 +41,7 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text="gildong@naver.com"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/et_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -52,6 +54,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="time"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/et_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -65,7 +68,7 @@
         android:ems="10"
         android:inputType="number"
         android:text="1234"
-        app:layout_constraintBottom_toTopOf="@+id/tv_typeof"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,13 +76,14 @@
 
     <TextView
         android:id="@+id/tv_typeof"
-        android:layout_width="266dp"
-        android:layout_height="189dp"
+        android:layout_width="332dp"
+        android:layout_height="382dp"
+        android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:text="텍스트 뷰의 변화"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_number" />
+        app:layout_constraintTop_toTopOf="@+id/et_name" />
 </android.support.constraint.ConstraintLayout>
