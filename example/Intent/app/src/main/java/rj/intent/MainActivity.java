@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.btn_phone:
                     intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("tel:010-1234-5678"));
+                            Uri.parse("tel:01012345678"));
                     break;
                 case R.id.btn_map:
                     intent = new Intent(Intent.ACTION_VIEW,
