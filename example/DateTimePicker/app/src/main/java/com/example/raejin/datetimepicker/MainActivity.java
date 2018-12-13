@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-            Toast.makeText(MainActivity.this, (i+1) + "/" + (i1+1) + "/"+ (i2+1),
+            Toast.makeText(MainActivity.this, i + "/" + (i1+1) + "/"+ i2,
                     Toast.LENGTH_LONG).show();
         }
     };
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker timePicker, int i, int i1) {
-            Toast.makeText(MainActivity.this, (i+1) + ":" + (i1+1),
+            Toast.makeText(MainActivity.this, i + ":" + i1,
                     Toast.LENGTH_LONG).show();
         }
     };
