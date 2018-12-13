@@ -52,7 +52,14 @@ public class MovieListActivity extends AppCompatActivity {
          */
         adapter = new ArrayAdapter<String>(MovieListActivity.this,
                 android.R.layout.simple_list_item_1, list);
-        lv_movieList.setAdapter(adapter);
+
+        // 3-1.새로 만든 어답터를 등록한다.
+        ListViewAdapter listViewAdapter = new ListViewAdapter(
+                MovieListActivity.this,
+                R.layout.listview_item,
+                arrayList);
+
+        lv_movieList.setAdapter(listViewAdapter);
 
         // 4. 리스트 뷰에 OnItemClickListener 등록하기
         lv_movieList.setOnItemClickListener(
