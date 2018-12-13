@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.raejin.mymovieapp.Form.ListViewItem;
@@ -35,7 +36,11 @@ public class ListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list.size();
+        if(list.size() % 2 == 0) {
+            return list.size() / 2;
+        } else {
+            return (list.size() / 2) + 1;
+        }
     }
 
     @Override
@@ -50,24 +55,47 @@ public class ListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        final int pos = i;
+        final int pos_l;
+        final int pos_r;
+
+        pos_l = (i * 2);
+        pos_r = (i * 2) + 1;
+
         if(view == null) {
             view = layoutInflater.inflate(item_layout, viewGroup, false);
         }
 
         ImageView iv_thumb = (ImageView) view.findViewById(R.id.iv_thumb);
-        iv_thumb.setImageResource(list.get(pos).getImg_id());
-        iv_thumb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context,
-                        "그림을 선택했습니다.",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-        /**
-         * 택스트뷰로 제목, 날짜 넣어보기
-         */
+        iv_thumb.setImageResource(list.get(pos_l).getImg_id());
+
+        TextView tv_title = (TextView)view.findViewById(R.id.tv_title);
+        tv_title.setText(list.get(pos_l).getTitle());
+
+        TextView tv_date = (TextView)view.findViewById(R.id.tv_date);
+        tv_date.setText(list.get(pos_l).getDate());
+
+        ImageView iv_thumb2 = (ImageView) view.findViewById(R.id.iv_thumb2);
+        TextView tv_title2 = (TextView)view.findViewById(R.id.tv_title2);
+        TextView tv_date2 = (TextView)view.findViewById(R.id.tv_date2);
+
+        if(pos_r < list.size()) {
+            iv_thumb2.setImageResource(list.get(pos_r).getImg_id());
+            tv_title2.setText(list.get(pos_r).getTitle());
+            tv_date2.setText(list.get(pos_r).getDate());
+        } else {
+            iv_thumb2.setVisibility(View.GONE);
+            tv_title2.setVisibility(View.GONE);
+            tv_date2.setVisibility(View.GONE);
+        }
+
+
+
+
+
+
+
+
+
         return view;
     }
 }
