@@ -40,7 +40,7 @@ public class SubActivity extends AppCompatActivity {
                     "전달된 boolean 값 : " + val_bool + "\n" +
                     "전달된 double 값 : " + val_double + "\n" +
                     "전달된 float 값 : " + val_float + "\n" +
-                    "전달된 int 배열 값 : " + arr_int + "\n" +
+                    "전달된 int 배열 값 : " + arr_int[0] + "\t" + arr_int[1] + "\t" + arr_int[2] + "\n" +
                     "전달된 boolean 배열 값 : " + arr_bool[0] + "\t" + arr_bool[1] + "\t" + arr_bool[2] + "\n" +
                     "전달된 double 배열 값 : " + arr_double[0] + "\t" + arr_double[1] + "\t" + arr_double[2] + "\n" +
                     "전달된 float 배열 값 : " + arr_float[0] + "\t" + arr_float[1] + "\t" + arr_float[2] + "\n" );
