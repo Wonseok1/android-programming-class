@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
          */
 
         arrayList = new ArrayList<movie_list_item>();
+
         String[] movie_title = getResources().getStringArray(R.array.movie_title);
         TypedArray movie_img = getResources().obtainTypedArray(R.array.movie_img);
 
