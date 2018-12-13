@@ -1,7 +1,7 @@
-package com.example.raejin.mymovieapp;
+package com.example.raejin.mymovieapp.adapters;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.raejin.mymovieapp.Form.ListViewItem;
+import com.example.raejin.mymovieapp.InfoActivity;
+import com.example.raejin.mymovieapp.form.ListViewItem;
+import com.example.raejin.mymovieapp.R;
 
 import java.util.ArrayList;
 
@@ -65,6 +67,13 @@ public class ListViewAdapter extends BaseAdapter {
                 Toast.makeText(context,
                         list.get(pos).getTitle()+"를(을) 선택했습니다.",
                         Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(context, InfoActivity.class);
+                intent.putExtra("movie_index", pos);
+                intent.putExtra("movie_title", list.get(pos).getTitle());
+                intent.putExtra("movie_date", list.get(pos).getDate());
+                intent.putExtra("movie_img_id", list.get(pos).getImg_id());
+                context.startActivity(intent);
             }
         });
 

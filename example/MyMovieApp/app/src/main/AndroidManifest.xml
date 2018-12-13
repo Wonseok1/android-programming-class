@@ -17,7 +17,7 @@
         <activity android:name=".BookActivity" />
         <activity android:name=".BookCompActivity" />
         <activity android:name=".JoinActivity" />
-        <activity android:name=".MainActivity"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

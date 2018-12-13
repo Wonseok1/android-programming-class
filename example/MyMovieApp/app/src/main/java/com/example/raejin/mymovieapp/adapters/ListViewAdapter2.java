@@ -1,6 +1,7 @@
-package com.example.raejin.mymovieapp;
+package com.example.raejin.mymovieapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.raejin.mymovieapp.Form.ListViewItem;
+import com.example.raejin.mymovieapp.InfoActivity;
+import com.example.raejin.mymovieapp.form.ListViewItem;
+import com.example.raejin.mymovieapp.R;
 
 import java.util.ArrayList;
 
@@ -72,6 +75,13 @@ public class ListViewAdapter2 extends BaseAdapter {
                 Toast.makeText(context,
                         list.get(pos_l).getTitle()+"를(을) 선택했습니다.",
                         Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(context, InfoActivity.class);
+                intent.putExtra("movie_index", pos_l);
+                intent.putExtra("movie_title", list.get(pos_l).getTitle());
+                intent.putExtra("movie_date", list.get(pos_l).getDate());
+                intent.putExtra("movie_img_id", list.get(pos_l).getImg_id());
+                context.startActivity(intent);
             }
         });
 
@@ -94,6 +104,13 @@ public class ListViewAdapter2 extends BaseAdapter {
                     Toast.makeText(context,
                             list.get(pos_r).getTitle()+"를(을) 선택했습니다.",
                             Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(context, InfoActivity.class);
+                    intent.putExtra("movie_index", pos_r);
+                    intent.putExtra("movie_title", list.get(pos_r).getTitle());
+                    intent.putExtra("movie_date", list.get(pos_r).getDate());
+                    intent.putExtra("movie_img_id", list.get(pos_r).getImg_id());
+                    context.startActivity(intent);
                 }
             });
 

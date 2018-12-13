@@ -1,4 +1,4 @@
-package com.example.raejin.mymovieapp.Form;
+package com.example.raejin.mymovieapp.form;
 
 /**
  * Created by student on 2018-12-13.

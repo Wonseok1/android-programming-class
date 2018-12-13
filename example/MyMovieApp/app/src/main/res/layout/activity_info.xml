@@ -52,10 +52,10 @@
         android:id="@+id/textview_movie_title"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="textview_movie_title"
         android:textColor="@android:color/black"
         android:textSize="24sp"
@@ -68,26 +68,11 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textview_director"
+        android:id="@+id/textview_movie_date"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="textview_director"
-        android:textAlignment="textStart"
-        app:layout_constraintBottom_toTopOf="@+id/guideline8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/guideline3"
-        app:layout_constraintVertical_bias="0.666" />
-
-    <TextView
-        android:id="@+id/textview_actor"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:text="textview_actor"
         android:textAlignment="textStart"
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
