@@ -1,4 +1,4 @@
-package com.example.raejin.mymovieapp;
+package com.example.raejin.mymovieapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.raejin.mymovieapp.R;
+import com.example.raejin.mymovieapp.movie_list_item;
 
 import java.util.ArrayList;
 
@@ -59,8 +62,8 @@ public class MyMovieAdapter extends BaseAdapter {
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView_item_poster);
         TextView textView = (TextView)view.findViewById(R.id.textView_item_title);
 
-        imageView.setImageResource(arrayList.get(i).movie_poster_img);
-        textView.setText(arrayList.get(i).movie_title);
+        imageView.setImageResource(arrayList.get(i).getMovie_poster_img());
+        textView.setText(arrayList.get(i).getMovie_title());
 
         return view;
     }

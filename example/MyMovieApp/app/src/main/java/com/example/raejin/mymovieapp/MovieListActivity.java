@@ -42,9 +42,6 @@ public class MovieListActivity extends AppCompatActivity {
         arrayList.add(
                 new ListViewItem(
                         "월요일이 사라졌다", "2018. 12", R.drawable.monday));
-        arrayList.add(
-                new ListViewItem(
-                        "라졌다", "2018. 12", R.drawable.monday));
 
 
         // 3. 리스트뷰에 Adapter 등록하기
@@ -57,10 +54,23 @@ public class MovieListActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, list);
 
         // 3-1.새로 만든 어답터를 등록한다.
+
+        // 한 항목에 2개 영화 출력
+/*
+
         ListViewAdapter listViewAdapter = new ListViewAdapter(
                 MovieListActivity.this,
                 R.layout.listview_item2,
                 arrayList);
+//*/
+
+        // 한 항목에 1개 영화 출력
+//*
+        ListViewAdapter listViewAdapter = new ListViewAdapter(
+                MovieListActivity.this,
+                R.layout.listview_item,
+                arrayList);
+//*/
 
         lv_movieList.setAdapter(listViewAdapter);
 

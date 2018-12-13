@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
+import com.example.raejin.mymovieapp.adapters.MyMovieAdapter;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
