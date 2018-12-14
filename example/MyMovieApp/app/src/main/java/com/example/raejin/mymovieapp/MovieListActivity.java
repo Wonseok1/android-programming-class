@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.raejin.mymovieapp.Form.*;
+
 import com.example.raejin.mymovieapp.adapters.ListViewAdapter;
 import com.example.raejin.mymovieapp.adapters.ListViewAdapter2;
 
@@ -32,17 +32,17 @@ public class MovieListActivity extends AppCompatActivity {
 
         // Adapter 에게 전달할 데이터 구성하기
 
-        com.example.raejin.mymovieapp.form.ListViewItem item = new com.example.raejin.mymovieapp.form.ListViewItem(
+        com.example.raejin.mymovieapp.Form.ListViewItem item = new com.example.raejin.mymovieapp.Form.ListViewItem(
                 "블랙팬서", "2018. 3", R.drawable.black);
-        ArrayList<com.example.raejin.mymovieapp.form.ListViewItem> arrayList = new ArrayList<com.example.raejin.mymovieapp.form.ListViewItem>();
+        ArrayList<com.example.raejin.mymovieapp.Form.ListViewItem> arrayList = new ArrayList<com.example.raejin.mymovieapp.Form.ListViewItem>();
         arrayList.add(item);
         arrayList.add(
-                new com.example.raejin.mymovieapp.form.ListViewItem("궁합", "2018. 1", R.drawable.match));
+                new com.example.raejin.mymovieapp.Form.ListViewItem("궁합", "2018. 1", R.drawable.match));
         arrayList.add(
-                new com.example.raejin.mymovieapp.form.ListViewItem(
+                new com.example.raejin.mymovieapp.Form.ListViewItem(
                         "리틀포레스트", "2018. 11", R.drawable.little));
         arrayList.add(
-                new com.example.raejin.mymovieapp.form.ListViewItem(
+                new com.example.raejin.mymovieapp.Form.ListViewItem(
                         "월요일이 사라졌다", "2018. 12", R.drawable.monday));
 
 
@@ -59,14 +59,14 @@ public class MovieListActivity extends AppCompatActivity {
 
         // 한 항목에 2개 영화 출력
 //*
-        ListViewAdapter2 listViewAdapter = new ListViewAdapter2(
+        ListViewAdapter2 listViewAdapter2 = new ListViewAdapter2(
                 MovieListActivity.this,
                 R.layout.listview_item2,
                 arrayList);
 //*/
 
         // 한 항목에 1개 영화 출력
-/*
+//*
         ListViewAdapter listViewAdapter = new ListViewAdapter(
                 MovieListActivity.this,
                 R.layout.listview_item,
@@ -74,6 +74,7 @@ public class MovieListActivity extends AppCompatActivity {
 //*/
 
         lv_movieList.setAdapter(listViewAdapter);
+        lv_movieList.setAdapter(listViewAdapter2);
 
         // 4. 리스트 뷰에 OnItemClickListener 등록하기
         lv_movieList.setOnItemClickListener(

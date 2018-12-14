@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.raejin.mymovieapp.InfoActivity;
-import com.example.raejin.mymovieapp.form.ListViewItem;
+import com.example.raejin.mymovieapp.Form.ListViewItem;
 import com.example.raejin.mymovieapp.R;
 
 import java.util.ArrayList;
