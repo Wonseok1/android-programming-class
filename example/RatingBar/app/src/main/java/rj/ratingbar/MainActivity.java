@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        ratingBar2.setRating(1.0f);
         tv_result.setText("두번째의 점수는 :" + ratingBar2.getRating());
     }
 

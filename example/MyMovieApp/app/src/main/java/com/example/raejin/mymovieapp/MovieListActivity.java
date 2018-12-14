@@ -8,8 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.raejin.mymovieapp.form.ListViewItem;
-import com.example.raejin.mymovieapp.adapters.*;
+import com.example.raejin.mymovieapp.Form.*;
+import com.example.raejin.mymovieapp.adapters.ListViewAdapter;
+import com.example.raejin.mymovieapp.adapters.ListViewAdapter2;
 
 import java.util.ArrayList;
 
@@ -30,17 +31,18 @@ public class MovieListActivity extends AppCompatActivity {
         lv_movieList = (ListView)findViewById(R.id.lv_movieList);
 
         // Adapter 에게 전달할 데이터 구성하기
-        ListViewItem item = new ListViewItem(
+
+        com.example.raejin.mymovieapp.form.ListViewItem item = new com.example.raejin.mymovieapp.form.ListViewItem(
                 "블랙팬서", "2018. 3", R.drawable.black);
-        ArrayList<ListViewItem> arrayList = new ArrayList<ListViewItem>();
+        ArrayList<com.example.raejin.mymovieapp.form.ListViewItem> arrayList = new ArrayList<com.example.raejin.mymovieapp.form.ListViewItem>();
         arrayList.add(item);
         arrayList.add(
-                new ListViewItem("궁합", "2018. 1", R.drawable.match));
+                new com.example.raejin.mymovieapp.form.ListViewItem("궁합", "2018. 1", R.drawable.match));
         arrayList.add(
-                new ListViewItem(
+                new com.example.raejin.mymovieapp.form.ListViewItem(
                         "리틀포레스트", "2018. 11", R.drawable.little));
         arrayList.add(
-                new ListViewItem(
+                new com.example.raejin.mymovieapp.form.ListViewItem(
                         "월요일이 사라졌다", "2018. 12", R.drawable.monday));
 
 
@@ -57,7 +59,6 @@ public class MovieListActivity extends AppCompatActivity {
 
         // 한 항목에 2개 영화 출력
 //*
-
         ListViewAdapter2 listViewAdapter = new ListViewAdapter2(
                 MovieListActivity.this,
                 R.layout.listview_item2,
