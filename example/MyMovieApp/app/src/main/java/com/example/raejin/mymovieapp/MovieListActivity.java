@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.raejin.mymovieapp.form.ListViewItem;
-import com.example.raejin.mymovieapp.adapters.ListViewAdapter;
+import com.example.raejin.mymovieapp.adapters.*;
 
 import java.util.ArrayList;
 
@@ -56,16 +56,16 @@ public class MovieListActivity extends AppCompatActivity {
         // 3-1.새로 만든 어답터를 등록한다.
 
         // 한 항목에 2개 영화 출력
-/*
+//*
 
-        ListViewAdapter listViewAdapter = new ListViewAdapter(
+        ListViewAdapter2 listViewAdapter = new ListViewAdapter2(
                 MovieListActivity.this,
                 R.layout.listview_item2,
                 arrayList);
 //*/
 
         // 한 항목에 1개 영화 출력
-//*
+/*
         ListViewAdapter listViewAdapter = new ListViewAdapter(
                 MovieListActivity.this,
                 R.layout.listview_item,
