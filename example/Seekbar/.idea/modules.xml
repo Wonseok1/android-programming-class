@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Seekbar.iml" filepath="$PROJECT_DIR$/Seekbar.iml" />
+      <module fileurl="file://C:\android-programming-class\example\Seekbar\Seekbar.iml" filepath="C:\android-programming-class\example\Seekbar\Seekbar.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\android-programming-class\example\Seekbar\app\app.iml" filepath="C:\android-programming-class\example\Seekbar\app\app.iml" />
     </modules>
   </component>
 </project>

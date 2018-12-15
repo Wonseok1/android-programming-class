@@ -179,7 +179,7 @@ public class BookActivity extends AppCompatActivity {
 
         @Override
         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-            String temp = i+ "년 "+(i1+1)+"월 "+ i2+"일";
+            String temp ="예매 일 : "+ i+ "년 "+(i1+1)+"월 "+ i2+"일";
             textview_book_date.setText(temp);
         }
     }
@@ -187,7 +187,7 @@ public class BookActivity extends AppCompatActivity {
 
         @Override
         public void onTimeSet(TimePicker timePicker, int i, int i1) {
-            String temp = i+"시 "+i1+"분";
+            String temp ="예매 시간 : " +  i+"시 "+i1+"분";
             textview_book_time.setText(temp);
         }
     }
