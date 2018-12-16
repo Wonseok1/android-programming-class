@@ -1,6 +1,8 @@
 package com.example.raejin.mymovieapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +14,7 @@ public class LogInActivity extends AppCompatActivity {
 
     EditText et_loginId, et_loginPw;
     Button btn_login;
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,14 @@ public class LogInActivity extends AppCompatActivity {
         et_loginPw = (EditText)findViewById(R.id.et_loginPw);
         btn_login = (Button)findViewById(R.id.btn_login);
 
+        sharedPref = getSharedPreferences("login_info", Context.MODE_PRIVATE);
+
+        if(!sharedPref.getString("autoLogin", "").equals("")) {
+            Intent intent = new Intent(LogInActivity.this,
+                    MovieListActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,15 +40,19 @@ public class LogInActivity extends AppCompatActivity {
                 if(authUser(et_loginId.getText().toString(),
                         et_loginPw.getText().toString())) {
 
-                    Intent intent = new Intent(LogInActivity.this,
-                            MovieListActivity.class);
-                    startActivity(intent);
+                    if(!et_loginId.equals("") && !et_loginPw.equals("")) {
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("autoLogin", et_loginId.getText().toString());
+                        editor.commit();
+
+                        Intent intent = new Intent(LogInActivity.this,
+                                MovieListActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
         });
-
-
-
     }
 
     private boolean authUser(String id, String pw) {
