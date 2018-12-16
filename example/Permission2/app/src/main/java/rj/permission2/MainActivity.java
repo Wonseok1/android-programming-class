@@ -59,33 +59,43 @@ public class MainActivity extends AppCompatActivity {
                 String content = et_content.getText().toString();
 
                 if(fileReadPermission && fileWritePermission) {
-                    FileWriter writer;
+                    String state = Environment.getExternalStorageState();
 
-                    try {
-                        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                                + "/myApp";
-                        File dir = new File(dirPath);
+                    if (state.equals(Environment.MEDIA_MOUNTED)) {
+                        FileWriter writer;
 
-                        if(!dir.exists()) {
-                            dir.mkdir();
+                        try {
+                            String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                                    + "/myApp";
+                            File dir = new File(dirPath);
+
+                            if(!dir.exists()) {
+                                dir.mkdir();
+                            }
+
+                            File file = new File(dir + "/myfile.txt");
+
+                            if(!file.exists()) {
+                                file.createNewFile();
+                            }
+
+                            writer = new FileWriter(file, true);
+                            writer.write(content);
+                            writer.flush();
+                            writer.close();
+
+                            Intent intent = new Intent(MainActivity.this, ReadFileActivity.class);
+                            startActivity(intent);
+                        }catch (Exception e) {
+                            e.printStackTrace();
                         }
 
-                        File file = new File(dir + "/myfile.txt");
-
-                        if(!file.exists()) {
-                            file.createNewFile();
-                        }
-
-                        writer = new FileWriter(file, true);
-                        writer.write(content);
-                        writer.flush();
-                        writer.close();
-
-                        Intent intent = new Intent(MainActivity.this, ReadFileActivity.class);
-                        startActivity(intent);
-                    }catch (Exception e) {
-                        e.printStackTrace();
+                    } else {
+                        Toast.makeText(MainActivity.this, "SD 카드가 마운트 되지 않았습니다.",
+                                Toast.LENGTH_SHORT).show();
                     }
+
+
                 } else {
                     Toast.makeText(MainActivity.this, "퍼미션이 부여되지 않았습니다.",
                             Toast.LENGTH_SHORT).show();
