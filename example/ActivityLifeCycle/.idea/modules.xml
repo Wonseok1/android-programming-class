@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ActivityLifeCycle.iml" filepath="$PROJECT_DIR$/ActivityLifeCycle.iml" />
+      <module fileurl="file://C:\android-programming-class\example\ActivityLifeCycle\ActivityLifeCycle.iml" filepath="C:\android-programming-class\example\ActivityLifeCycle\ActivityLifeCycle.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\android-programming-class\example\ActivityLifeCycle\app\app.iml" filepath="C:\android-programming-class\example\ActivityLifeCycle\app\app.iml" />
     </modules>
   </component>
 </project>

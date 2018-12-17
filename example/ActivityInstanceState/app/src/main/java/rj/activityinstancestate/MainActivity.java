@@ -47,4 +47,5 @@ public class MainActivity extends AppCompatActivity {
         count = savedInstanceState.getInt("temp_data");
         tv_count.setText(String.valueOf(count));
     }
+
 }

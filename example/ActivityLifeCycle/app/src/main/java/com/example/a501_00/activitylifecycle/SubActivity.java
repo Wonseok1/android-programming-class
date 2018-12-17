@@ -14,6 +14,7 @@ public class SubActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub);
+        Log.d("activity_cycle", "SubActivity에서 onCreate() 호출");
     }
 
     protected void onStart() {
