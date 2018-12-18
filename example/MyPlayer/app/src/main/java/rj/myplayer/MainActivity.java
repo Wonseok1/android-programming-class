@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             if (state.equals(Environment.MEDIA_MOUNTED)) {
                 try {
                     String musicPath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                            + "/test.mp3";
+                            + "/music.mp3";
 
                     // 음악 파일의 경로를 MediaPlayer 객체에 등록
                     player.setDataSource(musicPath);
