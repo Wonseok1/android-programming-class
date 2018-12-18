@@ -17,48 +17,57 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    boolean bReadPerm = false;
-    Button button_play, button_stop;
-    boolean bStatePlay = false;
+    boolean bReadPerm = false;          //SD카드를 읽기 위한 여부를 저장
+    Button button_play, button_stop;    // 버튼 객체를 위한 변수
+    boolean bStatePlay = false;         // 재생 상태 유무를 위한 변수,
+                                        // true : 재생, false : 정지
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        // sd 카드 읽기를 위한 권한을 처리하는 함수
         setPermission();
 
+        // 버튼 객체를 생성
         button_play = (Button) findViewById(R.id.button_play);
         button_stop = (Button) findViewById(R.id.button_stop);
 
+        // 버튼의 리스너 등록
         button_play.setOnClickListener(new myButtonListener());
         button_stop.setOnClickListener(new myButtonListener());
 
+        // 서비스와 통신을 위해 리시버를 등록
         registerReceiver(receiver, new IntentFilter("rj.myplayerservice"));
 
         if(bReadPerm) {
+            // SD 카드의 상태를 확인
             String state = Environment.getExternalStorageState();
 
             if (state.equals(Environment.MEDIA_MOUNTED)) {
+                // SD카드가 장착이 되어 있다면
                 try {
+                    // SD 카드 안에 있는 mp3 파일의 경로를 읽어온다.
                     String musicPath = Environment.getExternalStorageDirectory().getAbsolutePath()
                             + "/test.mp3";
+                    // 인텐트에 mp3 파일 경로를 저장한다.
                     Intent intent = new Intent(MainActivity.this, PlayService.class);
                     intent.putExtra("filePath", musicPath);
+                    // 서비스를 시작한다.
                     startService(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d("MyPlayerService_log", "Main onDestroy()");
+
+        // 엑티비티가 사라질 때 리시버도 해제
         unregisterReceiver(receiver);
     }
 

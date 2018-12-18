@@ -11,8 +11,8 @@ import android.util.Log;
 
 public class PlayService extends Service {
 
-    MediaPlayer player;
-    String filePath;
+    MediaPlayer player;     // mp3파일을 재생하는 MediaPlayer 객체 변수
+    String filePath;        // mp3파일의 경로를 저장하는 변수
 
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -71,8 +71,9 @@ public class PlayService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        // mp3 재생을 위한 MediaPlayer 객체를 생성한다.
         player = new MediaPlayer();
-
+        // 액티비티와 통신을 위한 리시버를 등록한다.
         registerReceiver(receiver, new IntentFilter("rj.myplayerservice"));
     }
 
@@ -80,6 +81,7 @@ public class PlayService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.d("MyPlayerService_log", "Service onDestroy()");
+        // 서비스가 종료될때 리시버를 등록 해제한다.
         unregisterReceiver(receiver);
     }
 
