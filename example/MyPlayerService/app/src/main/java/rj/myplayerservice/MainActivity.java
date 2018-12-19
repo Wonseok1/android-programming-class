@@ -74,14 +74,25 @@ public class MainActivity extends AppCompatActivity {
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            // 서비스로 부터 전달된 인텐트를 state라는 키 값으로
+            // 읽어온다.
+            // 값이 없다면, state 변수 안에는 null, play, pause, stop
             String state = intent.getStringExtra("state");
 
-            if(state != null) {
+            if(state != null) { // state라는 키에 맞는 값이 있다.
+                // 서비스가 재생 명령을 수행한 결과가 있다면
                 if (state.equals("play")) {
+                    // 재생중임을 표시하는 bStatePlay 변수에 true 저장
                     bStatePlay = true;
+                    // 버튼에 표시하는 문자를 pause로 바꾼다.
                     button_play.setText("Pause");
                 } else if(state.equals("pause") || state.equals("stop")) {
+                    // 서비스가 중지 혹은 일시 중지 명령을 수행한 결과가
+                    // 있다면
+
+                    // 재생중임을 표시하는 bStatePlay 변수에 false 저장
                     bStatePlay = false;
+                    // 버튼에 표시하는 문자를 play로 바꾼다.
                     button_play.setText("Play");
                 }
             }
@@ -93,19 +104,26 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
+            // 서비스의 리시버에 전달하기 위한 인텐트 준비
             intent = new Intent("rj.myplayerservice");
             switch(view.getId()) {
+                // play & pause 버튼
                 case R.id.button_play:
-                    if(bStatePlay) {
+                    if(bStatePlay) { // 음악이 재생중이면
+                        // play & pause 버튼이 일시 중지 명령을 인텐트에 포함
                         intent.putExtra("btn", "pause");
                     } else {
+                        // play & pause 버튼이 재생 명령을 인텐트에 포함
                         intent.putExtra("btn", "play");
                     }
                     break;
+                // stop 버튼
                 case R.id.button_stop:
+                    // stop 명령 인텐트에 포함
                     intent.putExtra("btn", "stop");
                     break;
             }
+            // 엑티비티에서 서비스의 브로드케스트 리시버에게 인텐트를 전달
             sendBroadcast(intent);
         }
     }
