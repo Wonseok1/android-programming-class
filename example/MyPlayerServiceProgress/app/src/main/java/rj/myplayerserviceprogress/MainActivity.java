@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     // SD 카드 안에 있는 mp3 파일의 경로를 읽어온다.
                     String musicPath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                            + "/music1.mp3";
+                            + "/music.mp3";
                     // 인텐트에 mp3 파일 경로를 저장한다.
                     Intent intent = new Intent(MainActivity.this, PlayService.class);
                     intent.putExtra("filePath", musicPath);
