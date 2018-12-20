@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tv_data;
     ImageView iv_poster;
-
+    String host = "http://70.12.110.50:3000";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
         tv_data = (TextView)findViewById(R.id.tv_data);
         iv_poster = (ImageView)findViewById(R.id.iv_poster);
 
-        String url = "http://192.168.1.150:3000";
+        String url = this.host;
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put("number","all");
+        map.put("number","1");
 
         MyHttpTask myHttpTask = new MyHttpTask(url, map);
         myHttpTask.execute();
 
-        String url_img = "http://192.168.1.150:3000/files";
+        String url_img = this.host+"/files";
         HashMap<String, String> map_img = new HashMap<String, String>();
         map_img.put("number","1");
 
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JSONObject root = new JSONObject(s);
                 Log.d("HttpConnectionLog", root.getString("title"));
-                Log.d("HttpConnectionLog", ""+(root.getInt("runningTime")));
+                Log.d("HttpConnectionLog", String.valueOf(root.getInt("runningTime")));
                 Log.d("HttpConnectionLog", root.getString("openDate"));
 
                 JSONArray director = root.getJSONArray("director");
