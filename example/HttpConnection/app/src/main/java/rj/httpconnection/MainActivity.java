@@ -6,9 +6,12 @@ import android.media.Image;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
@@ -37,14 +40,16 @@ public class MainActivity extends AppCompatActivity {
 
         String url = "http://192.168.1.150:3000";
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put("number","1");
+        map.put("number","all");
 
         MyHttpTask myHttpTask = new MyHttpTask(url, map);
         myHttpTask.execute();
 
         String url_img = "http://192.168.1.150:3000/files";
+        HashMap<String, String> map_img = new HashMap<String, String>();
+        map_img.put("number","1");
 
-        MyImageHttpTask myImageHttpTask = new MyImageHttpTask(url_img, map);
+        MyImageHttpTask myImageHttpTask = new MyImageHttpTask(url_img, map_img);
         myImageHttpTask.execute();
 
     }
@@ -217,7 +222,35 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             // do something
+
+
+            try {
+                JSONObject root = new JSONObject(s);
+                Log.d("HttpConnectionLog", root.getString("title"));
+                Log.d("HttpConnectionLog", ""+(root.getInt("runningTime")));
+                Log.d("HttpConnectionLog", root.getString("openDate"));
+
+                JSONArray director = root.getJSONArray("director");
+                JSONArray actor = root.getJSONArray("actor");
+                JSONArray category = root.getJSONArray("category");
+
+                for(int i = 0; i < director.length(); i++) {
+                    Log.d("HttpConnectionLog", director.getString(i));
+                }
+
+                for(int j = 0; j < actor.length(); j++) {
+                    Log.d("HttpConnectionLog", actor.getString(j));
+                }
+                for(int t = 0; t < category.length(); t++) {
+                    Log.d("HttpConnectionLog", category.getString(t));
+                }
+
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+
             tv_data.setText(s);
+
             this.cancel(true);
         }
 
