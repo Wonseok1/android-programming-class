@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tv_data;
     ImageView iv_poster;
-    String host = "http://70.12.110.50:3000";
+    String host = "http://192.168.1.150:3000";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

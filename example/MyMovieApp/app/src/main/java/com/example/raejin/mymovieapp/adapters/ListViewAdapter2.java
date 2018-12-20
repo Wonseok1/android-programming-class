@@ -2,6 +2,9 @@ package com.example.raejin.mymovieapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.raejin.mymovieapp.InfoActivity;
-import com.example.raejin.mymovieapp.Form.ListViewItem;
 import com.example.raejin.mymovieapp.R;
+import com.example.raejin.mymovieapp.form.ListViewItem;
 
 import java.util.ArrayList;
 
@@ -68,7 +71,20 @@ public class ListViewAdapter2 extends BaseAdapter {
         }
 
         ImageView iv_thumb = (ImageView) view.findViewById(R.id.iv_thumb);
-        iv_thumb.setImageResource(list.get(pos_l).getImg_id());
+//        iv_thumb.setImageResource(list.get(pos_l).getImg_id());
+
+        // drawable의 이미지 대신에 sd 카드에 저장된 이미지를 읽어온다.
+        if(list.get(pos_l).getImg_id() == -1
+                && !list.get(pos_l).getImgFileName().equals("")) {
+            try {
+                Bitmap bitMapImage = BitmapFactory.decodeFile(
+                        list.get(pos_l).getImgFileName());
+                iv_thumb.setImageBitmap(bitMapImage);
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         iv_thumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +113,20 @@ public class ListViewAdapter2 extends BaseAdapter {
         TextView tv_date2 = (TextView)view.findViewById(R.id.tv_date2);
 
         if(pos_r < list.size()) {
-            iv_thumb2.setImageResource(list.get(pos_r).getImg_id());
+//            iv_thumb2.setImageResource(list.get(pos_r).getImg_id());
+
+            // drawable의 이미지 대신에 sd 카드에 저장된 이미지를 읽어온다.
+            if(list.get(pos_r).getImg_id() == -1
+                    && !list.get(pos_r).getImgFileName().equals("")) {
+                try {
+                    Bitmap bitMapImage = BitmapFactory.decodeFile(
+                            list.get(pos_r).getImgFileName());
+                    iv_thumb2.setImageBitmap(bitMapImage);
+                }catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
             iv_thumb2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
