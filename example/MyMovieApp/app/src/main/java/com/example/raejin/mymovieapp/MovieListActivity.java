@@ -45,8 +45,8 @@ import java.util.Iterator;
 public class MovieListActivity extends AppCompatActivity {
 
     ListView lv_movieList;
-    String url = "http://192.168.1.150:3000";
-    String url_for_img = "http://192.168.1.150:3000/files";
+    String url = "http://70.12.110.50:3000";
+    String url_for_img = "http://70.12.110.50:3000/files";
 
     final int NUMBER_FOR_MOVIE = 6;
     ArrayList<ListViewItem> arrayList;
