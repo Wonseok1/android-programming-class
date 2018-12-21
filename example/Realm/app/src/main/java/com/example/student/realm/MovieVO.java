@@ -1,13 +1,29 @@
 package com.example.student.realm;
 
+import java.util.ArrayList;
+
+import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
  * Created by student on 2018-12-21.
  */
+
+
 public class MovieVO extends RealmObject {
     private int number;
     private String title;
+
+    public RealmList<ActorVO> actorList= new RealmList<ActorVO>();
+
+
+    public RealmList<ActorVO> getActorList() {
+        return actorList;
+    }
+
+    public void setActorList(RealmList<ActorVO> actorList) {
+        this.actorList = actorList;
+    }
 
     public int getNumber() {
         return number;
