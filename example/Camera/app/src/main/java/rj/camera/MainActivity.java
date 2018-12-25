@@ -1,6 +1,7 @@
 package rj.camera;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
@@ -11,12 +12,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Display;
 import android.view.TextureView;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -66,8 +64,14 @@ public class MainActivity extends AppCompatActivity implements
                                 fos.flush();
                                 fos.close();
 
+                                Intent intent = new Intent(MainActivity.this,
+                                        ImageActivity.class);
+                                intent.putExtra("img_name",
+                                        file.getPath());
+                                startActivity(intent);
 
-                                camera.startPreview();
+
+                                // camera.startPreview();
                             }catch(Exception e) {
                                 e.printStackTrace();
                             }
@@ -141,7 +145,8 @@ public class MainActivity extends AppCompatActivity implements
         if(!bCameraPerm) {
             ActivityCompat.requestPermissions(this,
                     new String[] {
-                            Manifest.permission.CAMERA
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
                     }, 200);
         }
 
@@ -153,7 +158,8 @@ public class MainActivity extends AppCompatActivity implements
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == 200 && grantResults.length > 0) {
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 bCameraPerm = true;
             }
         }

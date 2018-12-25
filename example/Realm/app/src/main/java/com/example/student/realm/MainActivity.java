@@ -59,12 +59,9 @@ public class MainActivity extends AppCompatActivity {
                                 MovieVO movieVO = realm.createObject(MovieVO.class);
                                 movieVO.setTitle(title);
                                 movieVO.setNumber(Integer.parseInt(number));
-                                ItemVO i = new ItemVO();
-                                i.str="hihi";
-                                movieVO.getList().add(i);
-                                ItemVO i2 = new ItemVO();
-                                i2.str="hihi2";
-                                movieVO.getList().add(i2);
+                                ActorVO i = new ActorVO();
+                                i.setActor("hihi");
+                                movieVO.getActorList().add(i);
 
                             }
                         });
@@ -77,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
                     if(results.size() > 0) {
                         for (int i = 0; i < results.size(); i++) {
                             str += ("number : " + results.get(i).getNumber() + " title : "
-                                    + results.get(i).getTitle() + ":" +results.get(i).getList().get(1).str +"+\n");
+                                    + results.get(i).getTitle() + ":"
+                                    +results.get(i).getActorList().get(0).getActor()+"+\n");
                         }
                     } else {
                         str += "no data";

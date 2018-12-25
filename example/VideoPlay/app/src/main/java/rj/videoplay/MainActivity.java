@@ -2,7 +2,10 @@ package rj.videoplay;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -23,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     MediaController mediaController;
     boolean bPerm = false;
     Button btn_start;
-
+    ImageView iv_thumb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         mediaController = new MediaController(this);
         vv_show.setMediaController(mediaController);
 
+        iv_thumb = (ImageView)findViewById(R.id.iv_thumb);
         setPermission();
 
         btn_start = (Button)findViewById(R.id.btn_start);
@@ -51,8 +56,22 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-                    if(list != null) {
+                    if(list != null && list.length > 0) {
                         vv_show.setVideoPath(list[0].getPath());
+
+                        // 동영상에서 썸네일을 만들어 주는 코드
+
+                        // 동영상에서 썸네일 이미지를 추출한다.
+                        Bitmap bitmap = ThumbnailUtils.createVideoThumbnail(
+                                list[0].getPath(),
+                                MediaStore.Video.Thumbnails.FULL_SCREEN_KIND);
+
+                        // 동영상에서 얻은 이미지를 가로세로 뷰에 맞게 크기를 조절한후
+                        // 이미지로 내보낸다.
+                        Bitmap thumb = ThumbnailUtils.extractThumbnail(bitmap, 300, 300);
+
+                        // 이미지뷰에 썸네일을 제공한다.
+                        iv_thumb.setImageBitmap(thumb);
                     } else {
                         Toast.makeText(MainActivity.this, "동영상 파일이 없습니다.", Toast.LENGTH_SHORT).show();
                     }
