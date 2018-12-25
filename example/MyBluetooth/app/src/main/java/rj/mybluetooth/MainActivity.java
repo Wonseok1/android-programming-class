@@ -56,28 +56,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 권한 관련 설정
         setPermission(new String[] {
                 Manifest.permission.BLUETOOTH,
                 Manifest.permission.BLUETOOTH_ADMIN
         });
 
+        // 뷰 객체 생성
         btn_discover = (Button) findViewById(R.id.btn_discover);
         btn_scan     = (Button) findViewById(R.id.btn_scan);
         lv_device    = (ListView) findViewById(R.id.lv_device);
 
+        // 버튼 리스너 등록
         btn_discover.setOnClickListener(new BtnListener());
         btn_scan.setOnClickListener(new BtnListener());
 
+        // 검색된 블루투스 기기 정보를 저장하기 위한 Arraylist
         device_list = new ArrayList<BluetoothDevice>();
+
+        // 검색된 블루투스 기기 정보를 listview에 표시하기 위한 Adapter 생성 및 등록
         deviceAdapter = new DeviceAdapter(
                 MainActivity.this, R.layout.item_device,
                 device_list);
-
         lv_device.setAdapter(deviceAdapter);
+
+        // 리스트뷰 리스너 등록
         lv_device.setOnItemClickListener(new ItemListener());
 
+        // 블루투스 지원 여부 검사
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        // 지원 여부 검사
         if(bluetoothAdapter != null) {
             // 블루투스 활성화
             bluetoothAdapter.enable();
@@ -97,28 +104,38 @@ public class MainActivity extends AppCompatActivity {
     class ItemListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            // 사용자가 선택한 블루투스 기기의 정보를 Arraylist에서 가져온다.
             targetDevice = device_list.get(i);
 
             Toast.makeText(MainActivity.this, "클라이언트 동작", Toast.LENGTH_SHORT).show();
+
+            // 클라이언트 역할로 접속하기 위한 Thread를 기동한다.
             ClientThread clientThread = new ClientThread();
             clientThread.start();
+
+            // 기존의 서버 역할로 접속하기 위한 스레드는 종료한다.
+            serverThread.interrupt();
         }
     }
 
-    
+    // 서버 역할을 하기 위한 스레드
     class ServerThread extends Thread {
         @Override
         public void run() {
-            while(true) {
+            while(!Thread.currentThread().isInterrupted()) {
+                // 연결 여부 및 블루투스 활성화 검사.
                 if(!bConn && bluetoothAdapter.isEnabled()) {
                     try {
-
+                        // 서버 동작을 위한 BluetoothServerSocket 객체를 생성한다
                         serverSocket = bluetoothAdapter
                                 .listenUsingRfcommWithServiceRecord("MyBluetooth", MY_UUID);
 
+                        // 연결을 기다리다가 클라이언트가 연결되면 BluetoothSocket를 생성한다.
+                        // BluetoothSocket 객체로 통신을 할 수 있다.
                         connSocket = serverSocket.accept();
 
                         if(connSocket != null) {
+                            // 메시지를 주고 받기 위해 MessageActivity로 이동하자.
                             Intent intent = new Intent(MainActivity.this,
                                     MessageActivity.class);
                             startActivity(intent);
@@ -138,17 +155,24 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    // 클라이언트 역할을 하기 위한 스레드
     class ClientThread extends Thread {
 
         @Override
         public void run() {
             try {
+                // 기기 검색을 중지함
                 bluetoothAdapter.cancelDiscovery();
+
+                // 선택한 기기 정보를 활용하여 상호간에 통신을 위한 BluetoothSocket 객체를 얻는다.
                 connSocket = targetDevice.createInsecureRfcommSocketToServiceRecord(MY_UUID);
+                // 서버와 연결
                 connSocket.connect();
 
                 bConn = true;
 
+                // 데이터를 주고 받을 수 있는 MessageActivity로 이동
                 Intent intent = new Intent(MainActivity.this,
                         MessageActivity.class);
                 startActivity(intent);
@@ -157,46 +181,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    Handler mainHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch(msg.what) {
-                case 1:
-                    AlertDialog.Builder builder =
-                            new AlertDialog.Builder(getApplicationContext());
-                    builder.setMessage("연결합니끼?");
-                    builder.setPositiveButton("허가", dialogListener);
-                    builder.setNegativeButton("거부", dialogListener);
-                    selectDialog = builder.create();
-                    selectDialog.show();
-                    break;
-            }
-        }
-    };
-
-    DialogInterface.OnClickListener dialogListener =
-            new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    if(dialogInterface == selectDialog &&
-                            i == DialogInterface.BUTTON_POSITIVE) {
-
-
-
-                    } else if (dialogInterface == selectDialog &&
-                            i == DialogInterface.BUTTON_NEGATIVE) {
-                        try {
-                            serverSocket.close();
-                            bSelect = false;
-                            bConn = false;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            };
-
 
     class BtnListener implements View.OnClickListener {
         @Override
