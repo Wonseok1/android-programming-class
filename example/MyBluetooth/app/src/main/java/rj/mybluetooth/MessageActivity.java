@@ -140,7 +140,7 @@ public class MessageActivity extends AppCompatActivity {
 
                         // 전송한 데이터를 MessageActivity안의 TextView에 출력하기 위해 메시지를 전달한다.
                         Message msg_to_acti = new Message();
-                        msg_to_acti.what = 200;
+                        msg_to_acti.what = RECEIVED_MESSAGE;
                         msg_to_acti.obj = msg.obj;
                         msgHandler.sendMessage(msg_to_acti);
                     } catch (Exception e) {
@@ -183,7 +183,7 @@ public class MessageActivity extends AppCompatActivity {
 
                     // 읽어온 MessageActivity 안의 listview에 적용하기 위해 헨들러에 메시지를 전달한다
                     Message msg = new Message();
-                    msg.what = 100;
+                    msg.what = SEND_MESSAGE;
                     msg.obj = read_str;
                     msgHandler.sendMessage(msg);
                 } catch (Exception e) {
