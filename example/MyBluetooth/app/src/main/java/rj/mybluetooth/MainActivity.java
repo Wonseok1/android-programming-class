@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        IntentFilter searchFilter = new IntentFilter();
+        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED); //BluetoothAdapter.ACTION_DISCOVERY_STARTED : 블루투스 검색 시작
+        searchFilter.addAction(BluetoothDevice.ACTION_FOUND); //BluetoothDevice.ACTION_FOUND : 블루투스 디바이스 찾음
+        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED); //BluetoothAdapter.ACTION_DISCOVERY_FINISHED : 블루투스 검색 종료
+        registerReceiver(mBluetoothSearchReceiver, searchFilter);
 
 
         // 권한 관련 설정
@@ -112,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
     class ItemListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            if(bluetoothAdapter.isDiscovering()){
+                bluetoothAdapter.cancelDiscovery();
+            }
+            
             // 사용자가 선택한 블루투스 기기의 정보를 Arraylist에서 가져온다.
             targetDevice = device_list.get(i);
 
@@ -310,13 +319,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setBluetoot() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        IntentFilter searchFilter = new IntentFilter();
-        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED); //BluetoothAdapter.ACTION_DISCOVERY_STARTED : 블루투스 검색 시작
-        searchFilter.addAction(BluetoothDevice.ACTION_FOUND); //BluetoothDevice.ACTION_FOUND : 블루투스 디바이스 찾음
-        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED); //BluetoothAdapter.ACTION_DISCOVERY_FINISHED : 블루투스 검색 종료
-        registerReceiver(mBluetoothSearchReceiver, searchFilter);
-
         bluetoothAdapter.startDiscovery();
     }
 }
