@@ -37,14 +37,12 @@ import rj.mybluetooth.adapter.DeviceAdapter;
 public class MainActivity extends AppCompatActivity {
 
     BluetoothAdapter bluetoothAdapter;
-    Button btn_scan, btn_discover;
+    Button btn_scan, btn_discover, btn_fair;
     ArrayList<BluetoothDevice> device_list;
     boolean bPerm;
     ListView lv_device;
     DeviceAdapter deviceAdapter;
     boolean bConn = false;
-    boolean bSelect = false;
-    AlertDialog selectDialog;
     BluetoothServerSocket serverSocket;
     static BluetoothSocket connSocket;
     BluetoothDevice targetDevice;
@@ -56,20 +54,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         // 권한 관련 설정
         setPermission(new String[] {
                 Manifest.permission.BLUETOOTH,
-                Manifest.permission.BLUETOOTH_ADMIN
+                Manifest.permission.BLUETOOTH_ADMIN,
+                Manifest.permission.ACCESS_COARSE_LOCATION
         });
 
         // 뷰 객체 생성
         btn_discover = (Button) findViewById(R.id.btn_discover);
         btn_scan     = (Button) findViewById(R.id.btn_scan);
         lv_device    = (ListView) findViewById(R.id.lv_device);
+        btn_fair = (Button)findViewById(R.id.btn_pair);
 
         // 버튼 리스너 등록
         btn_discover.setOnClickListener(new BtnListener());
         btn_scan.setOnClickListener(new BtnListener());
+        btn_fair.setOnClickListener(new BtnListener());
 
         // 검색된 블루투스 기기 정보를 저장하기 위한 Arraylist
         device_list = new ArrayList<BluetoothDevice>();
@@ -84,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         lv_device.setOnItemClickListener(new ItemListener());
 
         // 블루투스 지원 여부 검사
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(bluetoothAdapter != null) {
             // 블루투스 활성화
             bluetoothAdapter.enable();
@@ -99,6 +101,12 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(mBluetoothSearchReceiver);
     }
 
     class ItemListener implements AdapterView.OnItemClickListener {
@@ -194,9 +202,13 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 1000);
                     startActivity(intent);
                     break;
-                case R.id.btn_scan:     // 페어링 기기 검색
-                    Toast.makeText(getApplicationContext(), "페어링된 기기를 검색함",
+                case R.id.btn_pair:
+                    Toast.makeText(getApplicationContext(), "이전 페어링된 기기를 검색함",
                             Toast.LENGTH_SHORT).show();
+
+                    if(bluetoothAdapter.isDiscovering()){
+                        bluetoothAdapter.cancelDiscovery();
+                    }
 
                     Set<BluetoothDevice> devices = bluetoothAdapter.getBondedDevices();
                     device_list.clear();
@@ -217,19 +229,61 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case R.id.btn_scan:     // 페어링 기기 검색
+                    Toast.makeText(MainActivity.this, "주변 기기를 검색함", Toast.LENGTH_SHORT).show();
+                    if(bluetoothAdapter.isDiscovering()){
+                        bluetoothAdapter.cancelDiscovery();
+                    }
+                    bluetoothAdapter.startDiscovery();
+                    break;
+
             }
         }
     }
+    //블루투스 검색결과 BroadcastReceiver
+    BroadcastReceiver mBluetoothSearchReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch(action){
+                //블루투스 디바이스 검색 종료
+                case BluetoothAdapter.ACTION_DISCOVERY_STARTED:
+                    device_list.clear();
+                    Toast.makeText(MainActivity.this, "블루투스 검색 시작", Toast.LENGTH_SHORT).show();
+                    break;
+                //블루투스 디바이스 찾음
+                case BluetoothDevice.ACTION_FOUND:
+                    //검색한 블루투스 디바이스의 객체를 구한다
+                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                    //데이터 저장
+                    device_list.add(device);
+
+                    //리스트 목록갱신
+                    deviceAdapter.notifyDataSetChanged();
+                    break;
+                //블루투스 디바이스 검색 종료
+                case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
+                    Toast.makeText(MainActivity.this, "블루투스 검색 종료", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 
     private void setPermission(String[] perm) {
         boolean bPerm = false;
 
-        for (int i = 0; i < perm.length; i++) {
-            if(ContextCompat.checkSelfPermission(getApplicationContext(), perm[i])
-                    != PackageManager.PERMISSION_GRANTED) {
-                bPerm = false;
-            }
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), perm[0])
+                == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(getApplicationContext(), perm[1])
+                        == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(getApplicationContext(), perm[2])
+                        == PackageManager.PERMISSION_GRANTED) {
+
+            setBluetoot();
+
+            bPerm = true;
         }
+
 
         if(!bPerm) {
             ActivityCompat.requestPermissions(
@@ -247,7 +301,22 @@ public class MainActivity extends AppCompatActivity {
                     bPerm = false;
                 }
             }
+            if(bPerm) {
+                setBluetoot();
+            }
         }
         this.bPerm = bPerm;
+    }
+
+    private void setBluetoot() {
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        IntentFilter searchFilter = new IntentFilter();
+        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED); //BluetoothAdapter.ACTION_DISCOVERY_STARTED : 블루투스 검색 시작
+        searchFilter.addAction(BluetoothDevice.ACTION_FOUND); //BluetoothDevice.ACTION_FOUND : 블루투스 디바이스 찾음
+        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED); //BluetoothAdapter.ACTION_DISCOVERY_FINISHED : 블루투스 검색 종료
+        registerReceiver(mBluetoothSearchReceiver, searchFilter);
+
+        bluetoothAdapter.startDiscovery();
     }
 }
