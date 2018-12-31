@@ -18,6 +18,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
     BluetoothServerSocket serverSocket;
     static BluetoothSocket connSocket;
     BluetoothDevice targetDevice;
-    final UUID MY_UUID = UUID.fromString("00001111-1010-1010-1010-12345678ABCD");
+    final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     ServerThread serverThread;
+    Intent receiver;
+    private LocalBroadcastManager localBroadcastManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         unregisterReceiver(mBluetoothSearchReceiver);
     }
 
@@ -120,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             if(bluetoothAdapter.isDiscovering()){
                 bluetoothAdapter.cancelDiscovery();
             }
-            
+
             // 사용자가 선택한 블루투스 기기의 정보를 Arraylist에서 가져온다.
             targetDevice = device_list.get(i);
 
