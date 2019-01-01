@@ -49,20 +49,12 @@ public class MainActivity extends AppCompatActivity {
     BluetoothDevice targetDevice;
     final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     ServerThread serverThread;
-    Intent receiver;
-    private LocalBroadcastManager localBroadcastManager;
+    IntentFilter searchFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        IntentFilter searchFilter = new IntentFilter();
-        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED); //BluetoothAdapter.ACTION_DISCOVERY_STARTED : 블루투스 검색 시작
-        searchFilter.addAction(BluetoothDevice.ACTION_FOUND); //BluetoothDevice.ACTION_FOUND : 블루투스 디바이스 찾음
-        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED); //BluetoothAdapter.ACTION_DISCOVERY_FINISHED : 블루투스 검색 종료
-        registerReceiver(mBluetoothSearchReceiver, searchFilter);
-
 
         // 권한 관련 설정
         setPermission(new String[] {
@@ -109,6 +101,16 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        searchFilter = new IntentFilter();
+        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED); //BluetoothAdapter.ACTION_DISCOVERY_STARTED : 블루투스 검색 시작
+        searchFilter.addAction(BluetoothDevice.ACTION_FOUND); //BluetoothDevice.ACTION_FOUND : 블루투스 디바이스 찾음
+        searchFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED); //BluetoothAdapter.ACTION_DISCOVERY_FINISHED : 블루투스 검색 종료
+        registerReceiver(mBluetoothSearchReceiver, searchFilter);
     }
 
     @Override
@@ -291,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                 ContextCompat.checkSelfPermission(getApplicationContext(), perm[2])
                         == PackageManager.PERMISSION_GRANTED) {
 
-            setBluetoot();
+            setBluetooth();
 
             bPerm = true;
         }
@@ -314,13 +316,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             if(bPerm) {
-                setBluetoot();
+                setBluetooth();
             }
         }
         this.bPerm = bPerm;
     }
 
-    private void setBluetoot() {
+    private void setBluetooth() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         bluetoothAdapter.startDiscovery();
     }
